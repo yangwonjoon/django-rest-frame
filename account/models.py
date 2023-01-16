@@ -6,11 +6,10 @@ from django.contrib.auth.models import PermissionsMixin
 
 class UserManager(BaseUserManager):
     
-    def create_user(self, email,nickname, password=None):
+    def create_user(self, email, nickname, password=None):
         if not email:
             raise ValueError('must have user email')
-        if not nickname:
-            raise ValueError('must have user nickname')
+        
         user = self.model(
             email=self.normalize_email(email),
             nickname = nickname,
@@ -19,17 +18,20 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, nickname, password=None):
-        user = self.create_user(
+    def create_superuser(self, email = None, nickname=None, password=None):
+        superuser = self.create_user(
             email=email,
             password=password,
             nickname=nickname
         )
 
-        user.is_admin = True
-        user.save(using=self._db)
+        superuser.is_admin = True
+        superuser.is_staff = True
+        superuser.is_superuser = True
+        superuser.is_active = True
+        superuser.save(using=self._db)
 
-        return user
+        return superuser
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -48,8 +50,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'nickname'
-    REQUIRED_FIELDS = ['email']
+    #이메일로 로그인
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     
     def has_perm(self, perm, obj=None):
@@ -63,7 +66,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
     def __str__(self):
-        return self.nickname
+        return self.id
 
 class Diary(models.Model):
     id = models.AutoField(primary_key=True)

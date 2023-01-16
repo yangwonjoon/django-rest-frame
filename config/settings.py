@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    #앱
     "account",
-
+    #라이브러리
     'rest_framework',
     'rest_framework_simplejwt',
 ]
