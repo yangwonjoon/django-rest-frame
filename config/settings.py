@@ -49,12 +49,18 @@ INSTALLED_APPS = [
 
 #jwtauthentication으로 인증할거임
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        #'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
+        #'rest_framework.permissions.IsAdminUser', # 관리자만 접근 가능
+        'rest_framework.permissions.AllowAny', # 누구나 접근 가능
+    ),
+    
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
 
-# 추가적인 JWT 설정, 다 쓸 필요는 없지만 혹시 몰라서 다 넣었다.
+# 추가적인 JWT 설정, 다 쓸 필요는 없지만 혹시 몰라서 다 넣음
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -147,12 +153,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'ko-kr'
-
-TIME_ZONE = 'Aisa / Seoul'
-
+#db 시간대 설정 문자열
+TIME_ZONE = 'Asia/Seoul'
+#장고 번역 시스템 활성화 여부
 USE_I18N = True
-
-USE_TZ = True
+#현지화 데이터 형식 사용 여부
+USE_L10N =True
+#시간대 인식 여부
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

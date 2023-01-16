@@ -12,3 +12,14 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['nickname', 'email', 'password']
+
+# class SignSerializer(serializers.ModelSerializer):
+#     def create(self, validated_data):
+#         user = User.objects.create_user(
+#             email = validated_data['email'],
+#             password = validated_data['password']
+#         )
+#         return user
+#     class Meta:
+#         model = User
+#         fields = '__all__'
