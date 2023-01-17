@@ -12,9 +12,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+        #field = '__all__'
+        #이것만 직렬화 하겠음
         fields = ['nickname', 'email', 'password']
 
 class SignSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+        #모두 직렬화하겠음
         fields = '__all__'

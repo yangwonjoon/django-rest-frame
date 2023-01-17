@@ -13,7 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 class RegisterAPIView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid():   #유효성 검사 통과하였으면
             user = serializer.save()
             
             # jwt 접근
